@@ -17,7 +17,7 @@ Configure oci function related paramters in src/main/resources/META-INF/micropro
 With JDK11+
 ```bash
 mvn package
-java -jar target/helidon-quickstart-mp.jar
+java -jar target/helidon-ocifunction-mp.jar
 ```
 
 ## Exercise the application
