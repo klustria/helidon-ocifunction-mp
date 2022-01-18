@@ -1,10 +1,9 @@
-# Helidon Quickstart MP that invokes another function using the OCI Java SDK
-
+# Helidon MP example that invokes Oracle Function
 Sample Helidon MP project that includes Oracle Function integration using OCI java sdk.
 
-## Configure environment and create/deploy a sample hello world Oracle Function
+## Configure environment
 
-Follow example provided in the [Functions QuickStart Guides](https://docs.oracle.com/en-us/iaas/Content/Functions/Tasks/functionsquickstartguidestop.htm#functionsquickstartguidestop).
+Create/deploy a sample hello world Oracle Function by following steps provided in the [Functions QuickStart Guides](https://docs.oracle.com/en-us/iaas/Content/Functions/Tasks/functionsquickstartguidestop.htm#functionsquickstartguidestop).
 
 ## Configure microprofile config
 

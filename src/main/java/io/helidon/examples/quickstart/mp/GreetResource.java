@@ -35,9 +35,6 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
  * Get greeting message for Joe:
  * curl -X GET http://localhost:8080/greet/Joe
  *
- * Change greeting
- * curl -X PUT -H "Content-Type: application/json" -d '{"greeting" : "Howdy"}' http://localhost:8080/greet/greeting
- *
  * The message is returned as a JSON object.
  */
 @Path("/greet")
@@ -69,8 +66,7 @@ public class GreetResource {
     }
 
     /**
-     * Return a worldly greeting message.
-     *
+     * Return the default Oracle Function greeting message
      * @return {@link JsonObject}
      */
     @GET
@@ -80,7 +76,7 @@ public class GreetResource {
     }
 
     /**
-     * Return a greeting message using the name that was provided.
+     * Return a Oracle Function greeting message using the name that was provided.
      *
      * @param name the name to greet
      * @return {@link JsonObject}

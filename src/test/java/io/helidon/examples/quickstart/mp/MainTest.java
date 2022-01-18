@@ -14,7 +14,7 @@ import io.helidon.microprofile.server.Server;
 
 import org.junit.jupiter.api.*;
 
-@Disabled
+// @Disabled
 class MainTest {
 
     private static Server server;
@@ -46,13 +46,6 @@ class MainTest {
         Assertions.assertEquals("Hello Joe!", jsonObject.getString("message"),
                 "hello Joe message");
 
-        Response r = client
-                .target(serverUrl)
-                .path("greet/greeting")
-                .request()
-                .put(Entity.entity("{\"greeting\" : \"Hola\"}", MediaType.APPLICATION_JSON));
-        Assertions.assertEquals(204, r.getStatus(), "PUT status code");
-
         jsonObject = client
                 .target(serverUrl)
                 .path("greet/Jose")
@@ -61,19 +54,6 @@ class MainTest {
         Assertions.assertEquals("Hola Jose!", jsonObject.getString("message"),
                 "hola Jose message");
 
-        r = client
-                .target(serverUrl)
-                .path("metrics")
-                .request()
-                .get();
-        Assertions.assertEquals(200, r.getStatus(), "GET metrics status code");
-
-        r = client
-                .target(serverUrl)
-                .path("health")
-                .request()
-                .get();
-        Assertions.assertEquals(200, r.getStatus(), "GET health status code");
     }
 
     @AfterAll
