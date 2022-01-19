@@ -1,20 +1,16 @@
 
-package io.helidon.examples.quickstart.mp;
+package io.helidon.examples.ocifunction.mp;
 
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.spi.CDI;
 import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import io.helidon.microprofile.server.Server;
 
 import org.junit.jupiter.api.*;
 
-// @Disabled
 class MainTest {
 
     private static Server server;
@@ -35,7 +31,7 @@ class MainTest {
                 .path("greet")
                 .request()
                 .get(JsonObject.class);
-        Assertions.assertEquals("Hello World!", jsonObject.getString("message"),
+        Assertions.assertEquals("Hello, world!", jsonObject.getString("oracle-function-message"),
                 "default message");
 
         jsonObject = client
@@ -43,17 +39,8 @@ class MainTest {
                 .path("greet/Joe")
                 .request()
                 .get(JsonObject.class);
-        Assertions.assertEquals("Hello Joe!", jsonObject.getString("message"),
+        Assertions.assertEquals("Hello, Joe!", jsonObject.getString("oracle-function-message"),
                 "hello Joe message");
-
-        jsonObject = client
-                .target(serverUrl)
-                .path("greet/Jose")
-                .request()
-                .get(JsonObject.class);
-        Assertions.assertEquals("Hola Jose!", jsonObject.getString("message"),
-                "hola Jose message");
-
     }
 
     @AfterAll

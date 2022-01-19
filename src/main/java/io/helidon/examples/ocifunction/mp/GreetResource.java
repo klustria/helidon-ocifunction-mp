@@ -1,5 +1,5 @@
 
-package io.helidon.examples.quickstart.mp;
+package io.helidon.examples.ocifunction.mp;
 
 import java.util.Collections;
 
@@ -14,20 +14,20 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.oracle.bmc.functions.FunctionsManagementClient;
+import com.oracle.bmc.functions.FunctionsManagement;
 import com.oracle.bmc.functions.requests.GetFunctionRequest;
 import com.oracle.bmc.functions.responses.GetFunctionResponse;
 import com.oracle.bmc.util.StreamUtils;
 import org.apache.commons.io.IOUtils;
 
-import com.oracle.bmc.functions.FunctionsInvokeClient;
+import com.oracle.bmc.functions.FunctionsInvoke;
 import com.oracle.bmc.functions.requests.InvokeFunctionRequest;
 import com.oracle.bmc.functions.responses.InvokeFunctionResponse;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 
 /**
- * A simple JAX-RS resource to greet you. Examples:
+ * A simple JAX-RS resource coupled with Oracle Function to greet you. Examples:
  *
  * Get default greeting message:
  * curl -X GET http://localhost:8080/greet
@@ -35,7 +35,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
  * Get greeting message for Joe:
  * curl -X GET http://localhost:8080/greet/Joe
  *
- * The message is returned as a JSON object.
+ * The message, coming from the Oracle Function, is returned as a JSON object.
  */
 @Path("/greet")
 @RequestScoped
@@ -44,16 +44,15 @@ public class GreetResource {
     private static final JsonBuilderFactory JSON = Json.createBuilderFactory(Collections.emptyMap());
 
     /**
-     * The greeting message provider.
+     * The OCI Function invoke and management clients.
      */
     private String functionId;
-    private FunctionsInvokeClient invokeClient;
-    private FunctionsManagementClient managementClient;
+    private FunctionsInvoke invokeClient;
+    private FunctionsManagement managementClient;
 
     /**
-     * Using constructor injection to get a configuration property.
-     * By default this gets the value from META-INF/microprofile-config
-     *
+     * Using constructor injection to get the oci.function.id configuration property.
+     * By default, this gets the value from META-INF/microprofile-config
      */
     @Inject
     public GreetResource(
@@ -76,7 +75,7 @@ public class GreetResource {
     }
 
     /**
-     * Return a Oracle Function greeting message using the name that was provided.
+     * Return an Oracle Function greeting message using the name that was provided.
      *
      * @param name the name to greet
      * @return {@link JsonObject}
@@ -107,11 +106,11 @@ public class GreetResource {
             String msg = IOUtils.toString(invokeFunctionResponse.getInputStream());
 
             return JSON.createObjectBuilder()
-                    .add("message", msg)
+                    .add("oracle-function-message", msg)
                     .build();
         } catch(Exception e) {
             return JSON.createObjectBuilder()
-                    .add("message", e.getMessage())
+                    .add("oracle-function-message", e.getMessage())
                     .build();
         }
     }

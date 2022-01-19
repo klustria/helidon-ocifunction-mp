@@ -1,37 +1,35 @@
 
-package io.helidon.examples.quickstart.mp;
+package io.helidon.examples.ocifunction.mp;
 
-import com.oracle.bmc.functions.requests.GetFunctionRequest;
-import com.oracle.bmc.functions.responses.GetFunctionResponse;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import com.oracle.bmc.auth.ConfigFileAuthenticationDetailsProvider;
+import com.oracle.bmc.functions.FunctionsInvoke;
 import com.oracle.bmc.functions.FunctionsInvokeClient;
+import com.oracle.bmc.functions.FunctionsManagement;
 import com.oracle.bmc.functions.FunctionsManagementClient;
 
 
 /**
- * Provider for greeting message.
+ * Provider for Oracle function greeting message.
  */
 @ApplicationScoped
 public class OCIFunctionProvider {
-    private FunctionsInvokeClient invokeClient;
-    private FunctionsManagementClient managementClient;
+    private FunctionsInvoke invokeClient;
+    private FunctionsManagement managementClient;
 
     /**
-     * Create a new greeting provider, reading the message from configuration.
-     *
-     * @param message greeting to use
+     * Instantiates a new Oracle Function provider, that creates management and invoke clients using ~/.oci
+     * configuration properties via the set oci.auth.profile configuration property or use "DEFAULT" if not provided.
      */
     @Inject
-    public OCIFunctionProvider(@ConfigProperty(name = "oci.auth.profile") String ociAuthProfile) {
+    public OCIFunctionProvider(@ConfigProperty(name = "oci.auth.profile", defaultValue = "DEFAULT") String ociAuthProfile) {
         try {
             ConfigFileAuthenticationDetailsProvider provider = new ConfigFileAuthenticationDetailsProvider(ociAuthProfile);
             invokeClient = FunctionsInvokeClient.builder()
-                    // .endpoint(invokeEndpoint)
                     .build(provider);
             managementClient = new FunctionsManagementClient(provider);
         } catch (Exception e) {
@@ -39,11 +37,11 @@ public class OCIFunctionProvider {
         }
     }
 
-    FunctionsInvokeClient getInvokeClient() {
+    FunctionsInvoke getInvokeClient() {
         return invokeClient;
     }
 
-    FunctionsManagementClient getManagementClient() {
+    FunctionsManagement getManagementClient() {
         return managementClient;
     }
 }
