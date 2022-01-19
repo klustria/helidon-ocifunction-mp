@@ -11,7 +11,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 
 /**
- * Tesr Provider for Oracle function greeting message.
+ * Mocked Test Provider for Oracle function greeting message.
  */
 @ApplicationScoped
 public class OCIFunctionProvider {
