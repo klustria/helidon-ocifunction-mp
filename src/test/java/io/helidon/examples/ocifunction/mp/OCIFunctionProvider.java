@@ -25,7 +25,6 @@ public class OCIFunctionProvider {
     @Inject
     public OCIFunctionProvider(@ConfigProperty(name = "oci.auth.profile", defaultValue = "DEFAULT") String ociAuthProfile) {
         try {
-            System.out.println("From test directory");
             ConfigFileAuthenticationDetailsProvider provider = new ConfigFileAuthenticationDetailsProvider(ociAuthProfile);
             invokeClient = new MockedFunctionsInvokeClient(provider);
             managementClient = new MockedFunctionsManagementClient(provider);
@@ -34,10 +33,7 @@ public class OCIFunctionProvider {
         }
     }
 
-    FunctionsInvoke getInvokeClient() {
-        System.out.println("Test OCIFunctionProvider");
-        return invokeClient;
-    }
+    FunctionsInvoke getInvokeClient() { return invokeClient; }
 
     FunctionsManagement getManagementClient() {
         return managementClient;
