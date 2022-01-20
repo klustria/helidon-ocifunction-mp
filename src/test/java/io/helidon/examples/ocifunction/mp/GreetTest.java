@@ -22,7 +22,7 @@ class GreetTest {
 
     @Test
     void testCustomGreeting() {
-        validate(webTarget, "greet/Joe", "Hello, Joe!");
+        validate(webTarget, "/greet/Joe", "Hello, Joe!");
     }
 
     private void validate(WebTarget webTarget,
